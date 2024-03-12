@@ -1,3 +1,5 @@
+"use client";
+import { authenticate } from "@/utils/github/auth";
 import { Menu, Search } from "lucide-react";
 import Link from "next/link";
 
@@ -8,7 +10,7 @@ export default function (): React.ReactNode {
 				<label htmlFor="my-drawer" className="btn btn-ghost btn-circle">
 					<Menu />
 				</label>
-				<Link href={"#"} className="btn btn-ghost mr-2 text-xl">
+				<Link href={"/"} className="btn btn-ghost mr-2 text-xl">
 					Blog
 				</Link>
 				<span className="badge">commit</span>
@@ -17,7 +19,11 @@ export default function (): React.ReactNode {
 				<button type="button" className="btn btn-ghost">
 					<Search />
 				</button>
-				<button type="button" className="btn btn-primary">
+				<button
+					onClick={authenticate}
+					type="button"
+					className="btn btn-primary"
+				>
 					Login
 				</button>
 			</div>
