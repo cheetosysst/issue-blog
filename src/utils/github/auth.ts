@@ -1,6 +1,6 @@
 import { generateCSRF } from "../csrf";
 
-export function authenticate() {
+export async function authenticate() {
 	const clientID = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
 	console.log(process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID);
 	if (clientID == null) {

@@ -1,13 +1,16 @@
-"use client";
-import { authenticate } from "@/utils/github/auth";
 import { Menu, Search } from "lucide-react";
+import { cookies } from "next/headers";
 import Link from "next/link";
+import { LoginComponent } from "./login";
 
-export default function (): React.ReactNode {
+export default async function Navbar() {
+	const cookieStore = cookies();
+	const ghToken = cookieStore.get("gh_token")?.value;
+
 	return (
-		<div className="navbar bg-base-100 border-base-200/50 fixed top-0 mx-auto border-b-2">
+		<div className="navbar fixed top-0 mx-auto border-b-2 border-base-200/50 bg-base-100">
 			<div className="flex-1">
-				<label htmlFor="my-drawer" className="btn btn-ghost btn-circle">
+				<label htmlFor="my-drawer" className="btn btn-circle btn-ghost">
 					<Menu />
 				</label>
 				<Link href={"/"} className="btn btn-ghost mr-2 text-xl">
@@ -19,13 +22,7 @@ export default function (): React.ReactNode {
 				<button type="button" className="btn btn-ghost">
 					<Search />
 				</button>
-				<button
-					onClick={authenticate}
-					type="button"
-					className="btn btn-primary"
-				>
-					Login
-				</button>
+				<LoginComponent isLoggedIn={ghToken != null} />
 			</div>
 		</div>
 	);

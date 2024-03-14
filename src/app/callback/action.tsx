@@ -62,3 +62,9 @@ function generateCodeExchangeURL({
 	codeExchangeURL.searchParams.append("code", code);
 	return codeExchangeURL.toString();
 }
+
+export async function clearAuthToken() {
+	"use server";
+	const cookieStore = cookies();
+	cookieStore.delete("gh_token");
+}
