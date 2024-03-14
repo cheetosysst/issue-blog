@@ -17,6 +17,7 @@ export async function authenticate() {
 	const redirectTarget = new URL("https://github.com/login/oauth/authorize");
 	redirectTarget.searchParams.append("client_id", clientID);
 	redirectTarget.searchParams.append("state", csrfToken);
+	redirectTarget.searchParams.append("scope", "repo");
 	if (process.env.NODE_ENV === "development")
 		redirectTarget.searchParams.append(
 			"redirect_uri",
