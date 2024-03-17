@@ -33,7 +33,6 @@ export async function POST(request: NextRequest) {
 	try {
 		const result = await fetch(codeExchangeURL.toString(), { headers });
 		const parsedResult = await result.json();
-		console.log(parsedResult);
 		cookieStore.set("gh_token", parsedResult.access_token);
 		return new Response(parsedResult.access_token);
 	} catch {

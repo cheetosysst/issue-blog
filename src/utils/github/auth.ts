@@ -2,7 +2,6 @@ import { generateCSRF } from "../csrf";
 
 export async function authenticate() {
 	const clientID = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
-	console.log(process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID);
 	if (clientID == null) {
 		// TODO Error message
 		throw new Error("github oauth client id missing");
