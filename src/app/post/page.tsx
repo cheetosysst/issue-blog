@@ -25,15 +25,17 @@ export default async function Page({
 	}
 
 	return (
-		<main className="mx-auto max-w-xl">
+		<article className="prose-headings:underline-offset-2 prose-headings:underline prose-h1:no-underline prose mx-auto max-w-xl">
 			<span className="text-sm text-neutral/60">{issue.created_at}</span>
-			<h1 className="mb-2 text-justify text-4xl">{issue.title}</h1>
+			<h1 className="prose-2xl mb-2 text-justify text-4xl font-semibold">
+				{issue.title}
+			</h1>
 			<Link
 				href={issue.user?.html_url ?? "#"}
-				className="link-hover link link-neutral flex w-full items-center justify-start gap-2 underline-offset-1"
+				className="not-prose link-hover link link-neutral flex w-full items-center justify-start gap-2 underline-offset-1"
 			>
 				<span className="avatar">
-					<span className="w-8 overflow-hidden rounded-full">
+					<span className="prose w-8 overflow-hidden rounded-full">
 						<img
 							src={issue.user?.avatar_url}
 							alt={`Github User ${issue.user?.login}`}
@@ -49,27 +51,21 @@ export default async function Page({
 						<h1 className="text-3xl">{props.children}</h1>
 					),
 					h2: (props) => (
-						<h2 className="text-2xl">{props.children}</h2>
+						<h2 className="prose-2xl">{props.children}</h2>
 					),
 					h3: (props) => (
-						<h3 className="text-xl">{props.children}</h3>
+						<h3 className="prose-xl">{props.children}</h3>
 					),
 					h4: (props) => (
-						<h4 className="text-lg">{props.children}</h4>
+						<h4 className="prose-lg">{props.children}</h4>
 					),
 					h5: (props) => (
-						<h5 className="text-base">{props.children}</h5>
+						<h5 className="prose-base">{props.children}</h5>
 					),
-					p: (props) => (
-						<p className="mb-4 text-base last:mb-0">
-							{props.children}
-						</p>
-					),
-					span: (props) => <span>{props.children}</span>,
 					a: (props) => (
 						<Link
 							href={props.href ?? "#"}
-							className="link link-primary visited:link-neutral"
+							className="link link-primary"
 						>
 							{props.children}
 						</Link>
@@ -85,7 +81,7 @@ export default async function Page({
 			>
 				{issue.body}
 			</Markdown>
-		</main>
+		</article>
 	);
 }
 

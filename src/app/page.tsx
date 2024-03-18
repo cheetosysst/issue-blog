@@ -27,10 +27,10 @@ async function Articles({ issue }: { issue: Issue }) {
 			href={`/post?number=${encodeURI(issue.number.toString())}`}
 			className="card card-compact transition-colors hover:bg-base-200"
 		>
-			<div className="card-body flex flex-col gap-2">
-				<span className="line-clamp-2 text-ellipsis text-justify text-2xl font-bold">
-					<span className="badge">#{issue.number}</span>
-					{issue.title}
+			<div className="card-body prose flex flex-col gap-2">
+				<span className="line-clamp-2 flex items-center gap-2 text-ellipsis text-justify text-2xl font-bold">
+					<span className="prose-base badge">#{issue.number}</span>
+					<span className="prose-2xl">{issue.title}</span>
 				</span>
 				<span className="text-md line-clamp-2 text-ellipsis text-justify ">
 					{issue.body_text}
