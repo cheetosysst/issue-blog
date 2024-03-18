@@ -36,6 +36,7 @@ export const IssueSchema = object({
 	body: optional(string()),
 	body_text: optional(string()),
 	user: optional(union([UserSchema])),
+	created_at: string([]),
 });
 
 export type Issue = Input<typeof IssueSchema>;
