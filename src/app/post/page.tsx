@@ -1,5 +1,6 @@
 import { getIssue } from "@/github/issue";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
 import { integer, number, safeParse, toMinValue } from "valibot";
@@ -36,9 +37,11 @@ export default async function Page({
 			>
 				<span className="avatar">
 					<span className="prose w-8 overflow-hidden rounded-full">
-						<img
-							src={issue.user?.avatar_url}
+						<Image
+							src={issue.user?.avatar_url ?? ""}
 							alt={`Github User ${issue.user?.login}`}
+							width={32}
+							height={32}
 						/>
 					</span>
 				</span>
@@ -71,10 +74,11 @@ export default async function Page({
 						</Link>
 					),
 					img: (props) => (
-						<img
-							src={props.src}
+						<Image
+							src={props.src ?? ""}
 							className="mb-2 overflow-hidden rounded-2xl"
-							alt={props.alt}
+							alt={props.alt ?? "Image without alt text"}
+							fill={true}
 						/>
 					),
 				}}

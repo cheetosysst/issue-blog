@@ -19,7 +19,12 @@ export default async function Navbar() {
 				<span className="badge">commit</span>
 			</div>
 			<div className="flex-none pr-2">
-				<button type="button" className="btn btn-ghost">
+				<button
+					type="button"
+					aria-label="search button"
+					title="Search Button"
+					className="btn btn-ghost"
+				>
 					<Search />
 				</button>
 				<LoginComponent isLoggedIn={ghToken != null} />
