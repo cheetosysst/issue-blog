@@ -10,7 +10,11 @@ export default async function Home({
 }) {
 	const page = parsePageIndex(searchParams.page);
 
-	const articles = await getIssues({ page: page, format: "text" });
+	const articles = await getIssues({
+		page: page,
+		format: "text",
+		state: "open",
+	});
 
 	return (
 		<main className="mx-auto max-w-xl">

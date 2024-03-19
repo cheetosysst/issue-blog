@@ -5,13 +5,13 @@ import {
 	searchParameterMapper,
 } from "@/utils/request";
 import type { ResponseFormat } from "@/utils/request";
-import { array, number, parse } from "valibot";
+import { array, parse } from "valibot";
 
 const IssuesSchema = array(IssueSchema);
 
 export async function getIssues(props: {
 	milestone?: string;
-	state?: string;
+	state?: "open" | "closed" | "all";
 	assignee?: string;
 	creator?: string;
 	mentioned?: string;
