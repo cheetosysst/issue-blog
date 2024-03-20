@@ -29,7 +29,7 @@ export default async function Page({
 		<article className="prose mx-auto max-w-xl pb-32">
 			<span className="text-sm text-neutral/60">{issue.created_at}</span>
 			<h1 className="prose-2xl mb-2 text-justify text-4xl font-semibold">
-				{issue.title}
+				{issue.title || "Untitled post"}
 			</h1>
 			<Link
 				href={issue.user?.html_url ?? "#"}
@@ -48,22 +48,50 @@ export default async function Page({
 				<span>@{issue.user?.login}</span>
 			</Link>
 			<div className="divider" />
+			{(issue.body == null || !issue.body.length) && (
+				<p className="italic">{"<Empty>"}</p>
+			)}
 			<Markdown
 				components={{
 					h1: (props) => (
-						<h1 className="text-3xl">{props.children}</h1>
+						<h1
+							className="text-3xl"
+							id={props.children?.toString().toLowerCase()}
+						>
+							{props.children}
+						</h1>
 					),
 					h2: (props) => (
-						<h2 className="prose-2xl">{props.children}</h2>
+						<h2
+							className="prose-2xl"
+							id={props.children?.toString().toLowerCase()}
+						>
+							{props.children}
+						</h2>
 					),
 					h3: (props) => (
-						<h3 className="prose-xl">{props.children}</h3>
+						<h3
+							className="prose-xl"
+							id={props.children?.toString().toLowerCase()}
+						>
+							{props.children}
+						</h3>
 					),
 					h4: (props) => (
-						<h4 className="prose-lg">{props.children}</h4>
+						<h4
+							className="prose-lg"
+							id={props.children?.toString().toLowerCase()}
+						>
+							{props.children}
+						</h4>
 					),
 					h5: (props) => (
-						<h5 className="prose-base">{props.children}</h5>
+						<h5
+							className="prose-base"
+							id={props.children?.toString().toLowerCase()}
+						>
+							{props.children}
+						</h5>
 					),
 					a: (props) => (
 						<Link

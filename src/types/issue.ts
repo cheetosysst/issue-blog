@@ -33,8 +33,8 @@ export const IssueSchema = object({
 		]),
 	),
 	title: string(),
-	body: optional(string()),
-	body_text: optional(string()),
+	body: optional(nullable(string())),
+	body_text: optional(nullable(string())),
 	user: optional(union([UserSchema])),
 	created_at: string([]),
 });

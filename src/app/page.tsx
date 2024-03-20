@@ -20,7 +20,7 @@ export default async function Home({
 	).sort((a, b) => a.number - b.number);
 
 	return (
-		<main className="mx-auto max-w-xl">
+		<main className="mx-auto mb-32 max-w-xl">
 			{articles.map((issue) => (
 				<Articles key={issue.node_id} issue={issue} />
 			))}
@@ -35,13 +35,20 @@ async function Articles({ issue }: { issue: Issue }) {
 			href={`/post?number=${encodeURI(issue.number.toString())}`}
 			className="card card-compact transition-colors hover:bg-base-200"
 		>
-			<div className="card-body prose flex flex-col gap-2">
+			<div
+				className="card-body prose flex flex-col gap-2"
+				title={issue.title || "Untitled Post"}
+			>
 				<span className="line-clamp-2 flex items-center gap-2 text-ellipsis text-justify text-2xl font-bold">
 					<span className="prose-base badge">#{issue.number}</span>
-					<span className="prose-2xl">{issue.title}</span>
+					<span className="prose-2xl line-clamp-1">
+						{issue.title || "Untitled Post"}
+					</span>
 				</span>
 				<span className="text-md line-clamp-2 text-ellipsis text-justify ">
-					{issue.body_text}
+					{issue.body_text || (
+						<span className="italic">{"<Empty>"}</span>
+					)}
 				</span>
 			</div>
 		</Link>
