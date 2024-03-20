@@ -26,7 +26,7 @@ export default async function Page({
 	}
 
 	return (
-		<article className="prose-headings:underline-offset-2 prose-headings:underline prose-h1:no-underline prose mx-auto max-w-xl">
+		<article className="prose mx-auto max-w-xl pb-32">
 			<span className="text-sm text-neutral/60">{issue.created_at}</span>
 			<h1 className="prose-2xl mb-2 text-justify text-4xl font-semibold">
 				{issue.title}

@@ -2,6 +2,7 @@ import { getIssues } from "@/github/issue";
 import type { Issue } from "@/types/issue";
 import Link from "next/link";
 import { integer, number, safeParse, toMinValue } from "valibot";
+import Infinite from "./infinite";
 
 export default async function Home({
 	searchParams,
@@ -10,17 +11,20 @@ export default async function Home({
 }) {
 	const page = parsePageIndex(searchParams.page);
 
-	const articles = await getIssues({
-		page: page,
-		format: "text",
-		state: "open",
-	});
+	const articles = (
+		await getIssues({
+			page: page,
+			format: "text",
+			state: "open",
+		})
+	).sort((a, b) => a.number - b.number);
 
 	return (
 		<main className="mx-auto max-w-xl">
 			{articles.map((issue) => (
 				<Articles key={issue.node_id} issue={issue} />
 			))}
+			<Infinite />
 		</main>
 	);
 }

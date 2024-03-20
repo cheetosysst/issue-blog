@@ -8,7 +8,7 @@ export default async function Navbar() {
 	const ghToken = cookieStore.get("gh_token")?.value;
 
 	return (
-		<div className="navbar fixed top-0 mx-auto border-b-2 border-base-200/50 bg-base-100">
+		<div className="navbar fixed top-0 z-10 mx-auto border-b-2 border-base-200/50 bg-base-100">
 			<div className="flex-1">
 				<label htmlFor="my-drawer" className="btn btn-circle btn-ghost">
 					<Menu />
