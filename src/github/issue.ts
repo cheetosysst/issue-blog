@@ -1,3 +1,4 @@
+"use server";
 import { IssueSchema } from "@/types/issue";
 import {
 	getEnvRepo,
@@ -17,7 +18,7 @@ export async function getIssues(props: {
 	mentioned?: string;
 	labels?: string;
 	sort?: "created" | "updated" | "comments";
-	direction?: string;
+	direction?: "desc" | "asc";
 	since?: Date | string;
 	page?: number;
 	per_page?: number;
