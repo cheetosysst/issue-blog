@@ -21,7 +21,7 @@ export function getGithubHeader({
 	header.append("X-GitHub-Api-Version", API_VER);
 
 	if (typeof oauthToken === "string") {
-		header.append("Authorization", `Bearer ${cookieStore}`);
+		header.append("Authorization", `Bearer ${oauthToken}`);
 	}
 
 	return header;
