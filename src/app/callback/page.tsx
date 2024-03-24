@@ -37,7 +37,7 @@ export default function Page({
 				setStatus("Authenticated, redirecting ...");
 				setTimeout(() => {
 					router.push("/");
-				}, 3000);
+				}, 1000);
 			})
 			.catch((error: Error) => {
 				console.error(error);

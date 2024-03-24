@@ -1,4 +1,5 @@
 "use server";
+import { getUser } from "@/github/user";
 import { cookies } from "next/headers";
 
 export async function getOauthToken(code: string) {
@@ -34,19 +35,26 @@ export async function getOauthToken(code: string) {
 		const token = parsedResult.access_token as string;
 
 		// This is a dumb solution to prevent client-side useEffect() from triggering twice, causing the token to be reset by error.
-		// I would change it if a better solutions appears, but for now this is the best I've got.
-		// This single line just screams "BUG! BUG! BUG!" and I'm not proud of this.
 		if (token == null) return;
 
 		if (scope == null || scope !== "repo") {
 			throw new Error("Oauth scope does not match");
 		}
 
+		const user = await getUser({ token });
+
 		cookies().set({
 			name: "gh_token",
 			sameSite: "lax",
 			value: token,
 		});
+		if (user != null) {
+			cookies().set({
+				name: "gh_user",
+				sameSite: "lax",
+				value: user.login,
+			});
+		}
 	} catch (error) {
 		console.error(error);
 		throw new Error("Failed retrieving token from Github");
