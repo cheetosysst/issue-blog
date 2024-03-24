@@ -1,4 +1,4 @@
-import { Menu, Search } from "lucide-react";
+import { Menu, PencilIcon, Search } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { LoginComponent } from "./login";
@@ -18,7 +18,7 @@ export default async function Navbar() {
 				</Link>
 				<span className="badge">commit</span>
 			</div>
-			<div className="flex-none pr-2">
+			<div className="flex flex-none gap-2 pr-2">
 				<button
 					type="button"
 					aria-label="search button"
@@ -27,8 +27,18 @@ export default async function Navbar() {
 				>
 					<Search />
 				</button>
+				<NewPost hidden={typeof ghToken !== "string"} />
 				<LoginComponent isLoggedIn={ghToken != null} />
 			</div>
 		</div>
+	);
+}
+
+function NewPost({ hidden }: { hidden: boolean }) {
+	if (hidden) return null;
+	return (
+		<Link href={"/new"} className="btn btn-primary">
+			<PencilIcon />
+		</Link>
 	);
 }

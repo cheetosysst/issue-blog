@@ -11,7 +11,7 @@ export default async function Home() {
 	});
 
 	return (
-		<main className="mx-auto mb-32 max-w-xl">
+		<main className="mx-auto mb-32 max-w-2xl">
 			{articles.map((issue) => (
 				<Articles key={issue.node_id} issue={issue} />
 			))}

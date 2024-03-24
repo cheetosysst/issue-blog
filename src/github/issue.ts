@@ -87,7 +87,61 @@ export async function getIssue(props: {
 		const issue = parse(IssueSchema, rawData);
 		return issue;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return undefined;
+	}
+}
+
+export async function submitIssue(props: { title: string; content: string }) {
+	if (props.title.length < 1) {
+		return {
+			type: "error",
+			message: "Empty title",
+		};
+	}
+	if (props.content.length < 30) {
+		return {
+			type: "error",
+			message: "Empty body",
+		};
+	}
+
+	const headers = getGithubHeader({});
+	const url = new URL(`https://api.github.com/repos/${getEnvRepo()}/issues`);
+
+	const response = await fetch(url.toString(), {
+		headers,
+		method: "POST",
+		body: JSON.stringify({
+			title: props.title,
+			body: props.content,
+		}),
+	}).catch((error) => {
+		console.error(error);
+		return undefined;
+	});
+
+	if (response == null) {
+		return {
+			type: "error",
+			message: "Submit failed, please try again later",
+		};
+	}
+
+	const data = await response.json();
+
+	try {
+		const issue = parse(IssueSchema, data);
+		return {
+			type: "success",
+			message: "Body requires at least 30 characters",
+			redirectURL: `/post?number=${issue.number}`,
+		};
+	} catch (error) {
+		console.error(error);
+		return {
+			type: "error",
+			message: "Unknown error, please try again later.",
+		};
 	}
 }
