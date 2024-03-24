@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Link from "next/link";
+import { CodeXmlIcon, HomeIcon } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,12 +34,22 @@ export default function RootLayout({
 							aria-label="close sidebar"
 							className="drawer-overlay"
 						/>
-						<ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+						<ul className="menu min-h-full w-80 bg-base-200 p-4 pt-20 text-base-content">
 							<li>
-								<Link href={"#"}>Sidebar Item 1</Link>
+								<Link href={"/"}>
+									<HomeIcon />
+									Home
+								</Link>
 							</li>
 							<li>
-								<Link href={"#"}>Sidebar Item 2</Link>
+								<Link
+									href={
+										"https://github.com/cheetosysst/issue-blog"
+									}
+								>
+									<CodeXmlIcon />
+									Github
+								</Link>
 							</li>
 						</ul>
 					</div>

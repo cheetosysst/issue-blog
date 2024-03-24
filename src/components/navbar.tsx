@@ -38,7 +38,7 @@ function NewPost({ hidden }: { hidden: boolean }) {
 	if (hidden) return null;
 	return (
 		<Link href={"/new"} className="btn btn-primary">
-			<PencilIcon />
+			<PencilIcon strokeWidth={1.75} size={22} />
 		</Link>
 	);
 }
