@@ -92,7 +92,12 @@ export async function getIssue(props: {
 	}
 }
 
-export async function submitIssue(props: { title: string; content: string }) {
+export const submitIssue = async (props: {
+	content: string;
+	title: string;
+	verb: "POST" | "PATCH";
+	number?: number;
+}) => {
 	if (props.title.length < 1) {
 		return {
 			type: "error",
@@ -102,20 +107,24 @@ export async function submitIssue(props: { title: string; content: string }) {
 	if (props.content.length < 30) {
 		return {
 			type: "error",
-			message: "Empty body",
+			message: "Body requires at least 30 characters",
 		};
 	}
 
 	const headers = getGithubHeader({});
-	const url = new URL(`https://api.github.com/repos/${getEnvRepo()}/issues`);
+	const url = new URL(
+		`https://api.github.com/repos/${getEnvRepo()}/issues${props.number != null && props.verb === "PATCH" ? `/${props.number}` : ""}`,
+	);
+
+	const body: Record<string, string> = {
+		title: props.title,
+		body: props.content,
+	};
 
 	const response = await fetch(url.toString(), {
 		headers,
-		method: "POST",
-		body: JSON.stringify({
-			title: props.title,
-			body: props.content,
-		}),
+		method: props.verb,
+		body: JSON.stringify(body),
 	}).catch((error) => {
 		console.error(error);
 		return undefined;
@@ -134,7 +143,7 @@ export async function submitIssue(props: { title: string; content: string }) {
 		const issue = parse(IssueSchema, data);
 		return {
 			type: "success",
-			message: "Body requires at least 30 characters",
+			message: "Success",
 			redirectURL: `/post?number=${issue.number}`,
 		};
 	} catch (error) {
@@ -144,4 +153,4 @@ export async function submitIssue(props: { title: string; content: string }) {
 			message: "Unknown error, please try again later.",
 		};
 	}
-}
+};
