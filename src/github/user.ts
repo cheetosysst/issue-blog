@@ -2,6 +2,7 @@
 
 import { UserSchema } from "@/types/user";
 import { getGithubHeader } from "@/utils/request";
+import { cookies } from "next/headers";
 import { parse } from "valibot";
 
 export async function getUser({ token }: { token?: string }) {
@@ -33,4 +34,13 @@ export async function getUser({ token }: { token?: string }) {
 		console.error(error);
 		return undefined;
 	}
+}
+
+export async function getCredential() {
+	const cookieStore = cookies();
+	const token = cookieStore.get("gh_token")?.value;
+	const login = cookieStore.get("gh_user")?.value;
+
+	if (token == null || login == null) return undefined;
+	return { token, login };
 }

@@ -7,6 +7,7 @@ import {
 } from "@/utils/request";
 import type { ResponseFormat } from "@/utils/request";
 import { array, parse } from "valibot";
+import { getCredential } from "./user";
 
 const IssuesSchema = array(IssueSchema);
 
@@ -154,3 +155,39 @@ export const submitIssue = async (props: {
 		};
 	}
 };
+
+export async function closeIssue({ number }: { number: number }) {
+	const credentials = await getCredential();
+	if (credentials == null) throw new Error("Not authenticated");
+
+	const issue = await getIssue({ number: number.toString() });
+	if (issue == null) {
+		throw new Error("Article doesn't exist");
+	}
+
+	if (issue.user?.login !== credentials.login) {
+		throw new Error("Not original author");
+	}
+
+	if (issue.state === "closed") {
+		throw new Error("Already closed");
+	}
+
+	const headers = getGithubHeader({});
+	const url = new URL(
+		`https://api.github.com/repos/${getEnvRepo()}/issues/${number}`,
+	);
+
+	const response = await fetch(url.toString(), {
+		headers,
+		method: "PATCH",
+		body: JSON.stringify({
+			state: "closed",
+		}),
+	}).catch((error) => {
+		console.error(error);
+		throw new Error("Failed deleting the aritcle");
+	});
+
+	return response.json();
+}

@@ -1,4 +1,4 @@
-import { getIssue } from "@/github/issue";
+import { closeIssue, getIssue } from "@/github/issue";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -6,6 +6,7 @@ import Markdown from "react-markdown";
 import { integer, number, safeParse, toMinValue } from "valibot";
 import { cookies } from "next/headers";
 import { FilePenIcon, Trash2Icon } from "lucide-react";
+import Manage from "./edit/manageArticle";
 
 export default async function Page({
 	searchParams,
@@ -52,26 +53,10 @@ export default async function Page({
 				<span>@{issue.user?.login}</span>
 			</Link>
 
-			{username === issue.user?.login && (
-				<div className="mt-4 flex gap-2">
-					<Link
-						className="btn btn-outline btn-neutral btn-xs"
-						title="Edit article"
-						href={`/post/edit?number=${issue.number}`}
-					>
-						<FilePenIcon size={16} />
-						Edit
-					</Link>
-					<Link
-						className="btn btn-outline btn-error btn-xs"
-						title="Delete article"
-						href={"#"}
-					>
-						<Trash2Icon size={16} />
-						Delete
-					</Link>
-				</div>
-			)}
+			<Manage
+				number={issue.number}
+				hidden={username !== issue.user?.login}
+			/>
 
 			<div className="divider" />
 			{(issue.body == null || !issue.body.length) && (
