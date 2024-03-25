@@ -1,6 +1,6 @@
+import { Editor } from "@/components/editor";
 import { Login } from "@/components/login";
 import { cookies } from "next/headers";
-import Editor from "./editor";
 
 export default async function Page() {
 	const cookieStore = cookies();
@@ -13,7 +13,7 @@ export default async function Page() {
 
 	return (
 		<main className="mx-auto max-w-3xl">
-			<Editor />
+			<Editor verb="POST" />
 		</main>
 	);
 }
