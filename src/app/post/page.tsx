@@ -4,12 +4,15 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
 import { integer, number, safeParse, toMinValue } from "valibot";
+import { cookies } from "next/headers";
+import { FilePenIcon, Trash2Icon } from "lucide-react";
 
 export default async function Page({
 	searchParams,
 }: {
 	searchParams: { [key: string]: string | string[] | undefined };
 }) {
+	const cookieStore = cookies();
 	const postNumber = parsePostNumber(searchParams.number);
 
 	if (postNumber == null) {
@@ -25,6 +28,8 @@ export default async function Page({
 		notFound();
 	}
 
+	const username = cookieStore.get("gh_user")?.value;
+
 	return (
 		<article className="prose mx-auto max-w-xl pb-32">
 			<span className="text-sm text-neutral/60">{issue.created_at}</span>
@@ -33,20 +38,41 @@ export default async function Page({
 			</h1>
 			<Link
 				href={issue.user?.html_url ?? "#"}
+				title={`Visit @${issue.user?.login}'s GitHub profile`}
 				className="not-prose link-hover link link-neutral flex w-full items-center justify-start gap-2 underline-offset-1"
 			>
-				<span className="avatar">
-					<span className="prose w-8 overflow-hidden rounded-full">
-						<Image
-							src={issue.user?.avatar_url ?? ""}
-							alt={`Github User ${issue.user?.login}`}
-							width={32}
-							height={32}
-						/>
-					</span>
+				<span className="avatar w-8 overflow-hidden rounded-full">
+					<Image
+						src={issue.user?.avatar_url ?? ""}
+						alt={`Github User ${issue.user?.login}`}
+						width={32}
+						height={32}
+					/>
 				</span>
 				<span>@{issue.user?.login}</span>
 			</Link>
+
+			{username === issue.user?.login && (
+				<div className="mt-4 flex gap-2">
+					<Link
+						className="btn btn-outline btn-neutral btn-xs"
+						title="Edit article"
+						href={`/post/edit?number=${issue.number}`}
+					>
+						<FilePenIcon size={16} />
+						Edit
+					</Link>
+					<Link
+						className="btn btn-outline btn-error btn-xs"
+						title="Delete article"
+						href={"#"}
+					>
+						<Trash2Icon size={16} />
+						Delete
+					</Link>
+				</div>
+			)}
+
 			<div className="divider" />
 			{(issue.body == null || !issue.body.length) && (
 				<p className="italic">{"<Empty>"}</p>
