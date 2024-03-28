@@ -83,6 +83,7 @@ export default async function Page({ searchParams }: Props) {
 				<p className="italic">{"<Empty>"}</p>
 			)}
 			<Markdown
+				className="overflow-hidden text-ellipsis text-justify"
 				components={{
 					h1: (props) => (
 						<h1
