@@ -16,7 +16,12 @@ export function Login() {
 		await authenticate();
 	};
 	return (
-		<button onClick={handler} type="button" className="btn btn-primary">
+		<button
+			title="Login"
+			onClick={handler}
+			type="button"
+			className="btn btn-primary"
+		>
 			Login
 		</button>
 	);

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { getOauthToken } from "./action";
 import { useEffect, useState } from "react";
+import ClientTitle from "@/components/title";
 
 export default function Page({
 	searchParams,
@@ -45,5 +46,10 @@ export default function Page({
 			});
 	}, []);
 
-	return <div className="p-4">{status}</div>;
+	return (
+		<div className="p-4">
+			{status}
+			<ClientTitle title="Authenticating" />
+		</div>
+	);
 }

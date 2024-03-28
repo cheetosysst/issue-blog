@@ -6,11 +6,9 @@ export function Articles({ issue }: { issue: Issue }) {
 		<Link
 			href={`/post?number=${encodeURI(issue.number.toString())}`}
 			className="card card-compact transition-colors hover:bg-base-200 hover:drop-shadow"
+			title={issue.title || "Untitled Post"}
 		>
-			<div
-				className="card-body prose flex flex-col gap-2"
-				title={issue.title || "Untitled Post"}
-			>
+			<div className="card-body prose flex flex-col gap-2">
 				<span className="line-clamp-2 flex items-center gap-2 text-ellipsis text-justify text-2xl font-bold">
 					<span
 						className={

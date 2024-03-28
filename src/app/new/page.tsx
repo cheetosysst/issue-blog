@@ -1,6 +1,14 @@
 import { Editor } from "@/components/editor";
 import { Login } from "@/components/login";
 import { cookies } from "next/headers";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "New post",
+	openGraph: {
+		title: "New post",
+	},
+};
 
 export default async function Page() {
 	const cookieStore = cookies();

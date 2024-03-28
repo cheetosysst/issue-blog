@@ -1,18 +1,38 @@
-import { closeIssue, getIssue } from "@/github/issue";
+import { getIssue } from "@/github/issue";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
 import { integer, number, safeParse, toMinValue } from "valibot";
 import { cookies } from "next/headers";
-import { FilePenIcon, Trash2Icon } from "lucide-react";
 import Manage from "./edit/manageArticle";
+import type { Metadata } from "next";
 
-export default async function Page({
-	searchParams,
-}: {
+type Props = {
 	searchParams: { [key: string]: string | string[] | undefined };
-}) {
+};
+
+export async function generateMetadata({
+	searchParams,
+}: Props): Promise<Metadata> {
+	const postNumber = parsePostNumber(searchParams.number);
+
+	if (postNumber == null)
+		return {
+			title: "Not Found",
+		};
+
+	const issue = await getIssue({
+		number: postNumber.toString(),
+		format: "raw",
+	});
+
+	return {
+		title: issue?.title || "Not Found",
+	};
+}
+
+export default async function Page({ searchParams }: Props) {
 	const cookieStore = cookies();
 	const postNumber = parsePostNumber(searchParams.number);
 

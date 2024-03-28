@@ -22,7 +22,7 @@ export default async function Navbar() {
 				<button
 					type="button"
 					aria-label="search button"
-					title="Search Button"
+					title="Hi, I'm a placeholder."
 					className="btn btn-ghost"
 				>
 					<Search />
