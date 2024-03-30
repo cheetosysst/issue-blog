@@ -53,7 +53,7 @@ export default async function Page({ searchParams }: Props) {
 	const username = cookieStore.get("gh_user")?.value;
 
 	return (
-		<article className="prose mx-auto max-w-xl pb-32">
+		<main className="prose mx-auto max-w-xl pb-32">
 			<span className="text-sm text-neutral/60">{issue.created_at}</span>
 			<h1 className="prose-2xl mb-2 text-justify text-4xl font-semibold">
 				{issue.title || "Untitled post"}
@@ -83,71 +83,73 @@ export default async function Page({ searchParams }: Props) {
 			{(issue.body == null || !issue.body.length) && (
 				<p className="italic">{"<Empty>"}</p>
 			)}
-			<Markdown
-				className="overflow-hidden text-ellipsis text-justify"
-				remarkPlugins={[remarkGfm]}
-				components={{
-					h1: (props) => (
-						<h1
-							className="text-3xl"
-							id={props.children?.toString().toLowerCase()}
-						>
-							{props.children}
-						</h1>
-					),
-					h2: (props) => (
-						<h2
-							className="prose-2xl"
-							id={props.children?.toString().toLowerCase()}
-						>
-							{props.children}
-						</h2>
-					),
-					h3: (props) => (
-						<h3
-							className="prose-xl"
-							id={props.children?.toString().toLowerCase()}
-						>
-							{props.children}
-						</h3>
-					),
-					h4: (props) => (
-						<h4
-							className="prose-lg"
-							id={props.children?.toString().toLowerCase()}
-						>
-							{props.children}
-						</h4>
-					),
-					h5: (props) => (
-						<h5
-							className="prose-base"
-							id={props.children?.toString().toLowerCase()}
-						>
-							{props.children}
-						</h5>
-					),
-					a: (props) => (
-						<Link
-							href={props.href ?? "#"}
-							className="link link-primary"
-						>
-							{props.children}
-						</Link>
-					),
-					img: (props) => (
-						<Image
-							src={props.src ?? ""}
-							className="mb-2 overflow-hidden rounded-2xl"
-							alt={props.alt ?? "Image without alt text"}
-							fill={true}
-						/>
-					),
-				}}
-			>
-				{issue.body}
-			</Markdown>
-		</article>
+			<article>
+				<Markdown
+					className="overflow-hidden text-ellipsis text-justify"
+					remarkPlugins={[remarkGfm]}
+					components={{
+						h1: (props) => (
+							<h1
+								className="text-3xl"
+								id={props.children?.toString().toLowerCase()}
+							>
+								{props.children}
+							</h1>
+						),
+						h2: (props) => (
+							<h2
+								className="prose-2xl"
+								id={props.children?.toString().toLowerCase()}
+							>
+								{props.children}
+							</h2>
+						),
+						h3: (props) => (
+							<h3
+								className="prose-xl"
+								id={props.children?.toString().toLowerCase()}
+							>
+								{props.children}
+							</h3>
+						),
+						h4: (props) => (
+							<h4
+								className="prose-lg"
+								id={props.children?.toString().toLowerCase()}
+							>
+								{props.children}
+							</h4>
+						),
+						h5: (props) => (
+							<h5
+								className="prose-base"
+								id={props.children?.toString().toLowerCase()}
+							>
+								{props.children}
+							</h5>
+						),
+						a: (props) => (
+							<Link
+								href={props.href ?? "#"}
+								className="link link-primary"
+							>
+								{props.children}
+							</Link>
+						),
+						img: (props) => (
+							<Image
+								src={props.src ?? ""}
+								className="mb-2 overflow-hidden rounded-2xl"
+								alt={props.alt ?? "Image without alt text"}
+								fill={true}
+							/>
+						),
+					}}
+				>
+					{issue.body}
+				</Markdown>
+			</article>
+		</main>
 	);
 }
 
