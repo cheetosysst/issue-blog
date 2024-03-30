@@ -1,5 +1,7 @@
 # Issue blog
 
+[Demo](https://issue-blog.thect.cc)
+
 Issue blog is a blog platform built on top of GitHub repository issues. Use the issue feature to compose and manage posts.
 
 I wrote this as a practice. This is not intended for serious work. Check out my Next 13 blog [cheetosysst/maraho](https://github.com/cheetosysst/maraho), or my future static blog project [cheetosysst/grandis](https://github.com/cheetosysst/grandis), if you're interested.
