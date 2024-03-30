@@ -7,6 +7,7 @@ import { integer, number, safeParse, toMinValue } from "valibot";
 import { cookies } from "next/headers";
 import Manage from "./edit/manageArticle";
 import type { Metadata } from "next";
+import remarkGfm from "remark-gfm";
 
 type Props = {
 	searchParams: { [key: string]: string | string[] | undefined };
@@ -84,6 +85,7 @@ export default async function Page({ searchParams }: Props) {
 			)}
 			<Markdown
 				className="overflow-hidden text-ellipsis text-justify"
+				remarkPlugins={[remarkGfm]}
 				components={{
 					h1: (props) => (
 						<h1

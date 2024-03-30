@@ -109,7 +109,9 @@ export function Editor({
 				/>
 				<dialog ref={previewRef} className="modal">
 					<div className="modal-box prose">
-						<Preview content={previewContent} />
+						<Suspense fallback={<Loading />}>
+							<Preview content={previewContent} />
+						</Suspense>
 					</div>
 					<form method="dialog" className="modal-backdrop">
 						<button type="submit">close</button>
@@ -120,22 +122,15 @@ export function Editor({
 	);
 }
 
-function Preview({ content }: { content: string }) {
-	return (
-		<Suspense fallback={<Loading />}>
-			<Markdown>{content}</Markdown>
-		</Suspense>
-	);
+async function Preview({ content }: { content: string }) {
+	const remarkGfm = (await import("remark-gfm")).default;
+	const Markdown = (await import("react-markdown")).default;
+	return <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>;
 }
 
 function Loading() {
 	return <progress className="progress w-56" />;
 }
-
-const Markdown = dynamic(() => import("react-markdown"), {
-	ssr: false,
-	loading: () => <div>Loading...</div>,
-});
 
 function ErrorMessage({ message }: { message: string }) {
 	if (message.length <= 0) {
