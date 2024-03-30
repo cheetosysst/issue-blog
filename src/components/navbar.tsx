@@ -16,7 +16,6 @@ export default async function Navbar() {
 				<Link href={"/"} className="btn btn-ghost mr-2 text-xl">
 					Blog
 				</Link>
-				<span className="badge">commit</span>
 			</div>
 			<div className="flex flex-none gap-2 pr-2">
 				<button
