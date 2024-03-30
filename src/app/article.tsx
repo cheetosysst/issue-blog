@@ -30,3 +30,15 @@ export function Articles({ issue }: { issue: Issue }) {
 		</Link>
 	);
 }
+export function Skeleton() {
+	return (
+		<div className="card-body prose flex flex-col gap-2">
+			<span className="line-clamp-2 flex items-center gap-2 text-ellipsis text-justify text-2xl font-bold">
+				<div className="skeleton w-12 bg-primary drop-shadow-lg" />
+				<div className="skeleton h-4 w-full" />
+			</span>
+			<div className="skeleton h-5 w-full" />
+			<div className="skeleton h-5 w-full" />
+		</div>
+	);
+}

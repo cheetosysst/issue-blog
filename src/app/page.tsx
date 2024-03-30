@@ -1,6 +1,7 @@
+"use server";
 import { getIssues } from "@/github/issue";
 import { InfiniteArticles } from "./infinite";
-import { Articles } from "./article";
+import { Articles, Skeleton } from "./article";
 import type { Issue } from "@/types/issue";
 import { Suspense } from "react";
 
@@ -14,11 +15,22 @@ export default async function Home() {
 
 	return (
 		<main className="mx-auto mb-32 max-w-2xl">
-			<Suspense fallback={<span>Loading...</span>}>
+			<Suspense fallback={<ArticleSkeletons />}>
 				<InitialArticles articles={articles} />
 			</Suspense>
 			<InfiniteArticles />
 		</main>
+	);
+}
+
+async function ArticleSkeletons() {
+	"use server";
+	return (
+		<>
+			{new Array(10).fill(undefined).map((_, index) => (
+				<Skeleton key={`skeleton${index}`} />
+			))}
+		</>
 	);
 }
 
