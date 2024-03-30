@@ -45,3 +45,11 @@ See [Feature](./docs/design.md) for detail.
     -   Delete (Close issue)
 
 ## Web Vital
+
+-   本地測試 Lighthouse 成績
+
+    ![alt text](docs/lighthouseLocal.png)
+
+-   部屬測試 Lighthouse 成績
+
+    ![alt text](docs/lighthouseDeployed.png)
