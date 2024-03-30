@@ -25,6 +25,9 @@ export const metadata: Metadata = {
 		locale: "en_US",
 		type: "website",
 	},
+	alternates: {
+		canonical: "https://issue-blog.thect.cc",
+	},
 };
 
 export default function RootLayout({
