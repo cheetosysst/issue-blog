@@ -1,9 +1,11 @@
 import { getIssues } from "@/github/issue";
 import { InfiniteArticles } from "./infinite";
 import { Articles } from "./article";
+import type { Issue } from "@/types/issue";
+import { Suspense } from "react";
 
 export default async function Home() {
-	const articles = await getIssues({
+	const articles = getIssues({
 		page: 1,
 		format: "text",
 		state: "open",
@@ -12,10 +14,21 @@ export default async function Home() {
 
 	return (
 		<main className="mx-auto mb-32 max-w-2xl">
+			<Suspense fallback={<span>Loading...</span>}>
+				<InitialArticles articles={articles} />
+			</Suspense>
+			<InfiniteArticles />
+		</main>
+	);
+}
+
+async function InitialArticles(props: { articles: Promise<Array<Issue>> }) {
+	const articles = await props.articles;
+	return (
+		<>
 			{articles.map((issue) => (
 				<Articles key={issue.node_id} issue={issue} />
 			))}
-			<InfiniteArticles />
-		</main>
+		</>
 	);
 }
