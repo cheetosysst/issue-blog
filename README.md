@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Issue blog
+
+Issue blog is a blog platform built on top of GitHub repository issues. Use the issue feature to compose and manage posts.
+
+I wrote this as a practice. This is not intended for serious work. Check out my Next 13 blog [cheetosysst/maraho](https://github.com/cheetosysst/maraho), or my future static blog project [cheetosysst/grandis](https://github.com/cheetosysst/grandis), if you're interested.
+
+I wrote some notes in this README, to document some thoughts and decisions I made.
+
+[TOC]
 
 ## Getting Started
 
-First, run the development server:
+1. Register an OAUTH app on GitHub
+   You can find instructions [here](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
+2. Clone the repo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    ```sh
+    git clone https://github.com/cheetosysst/issue-blog
+    ```
+
+3. Create environment variables
+   Copy `.env.example` as `.env.local`, and fill in the variables.
+   You can find the client id and secret in the oauth app you just created.
+   Point `REPO` to the repo you want to use.
+    > The repo **must** be a public repo.
+4. Run the project
+
+    ```bash
+    pnpm i
+    pnpm dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Design
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+See [Feature](./docs/design.md) for detail.
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+-   GitHub Authentication
+-   Post Management
+    -   Create
+    -   Edit
+    -   Delete (Close issue)
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Web Vital
