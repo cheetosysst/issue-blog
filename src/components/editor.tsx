@@ -28,6 +28,7 @@ export function Editor({
 		useState<Timeout | null>(null);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [previewContent, setPreviewContent] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const openPreview = () => {
 		// Prevent excessive state change
@@ -36,6 +37,7 @@ export function Editor({
 	};
 
 	const submit = async () => {
+		setIsSubmitting(true);
 		const res = await submitIssue({
 			content: contentRef.current?.value ?? "",
 			title: titleRef.current?.value ?? "",
@@ -44,6 +46,7 @@ export function Editor({
 		});
 		if (res.type === "error") {
 			submitError(res.message);
+			setIsSubmitting(false);
 			return;
 		}
 		router.push(res.redirectURL ?? "/");
@@ -84,6 +87,7 @@ export function Editor({
 							type="button"
 							className="btn btn-primary btn-sm"
 							onClick={submit}
+							disabled={isSubmitting}
 						>
 							Submit
 						</button>
