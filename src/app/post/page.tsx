@@ -3,11 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
+import type { ExtraProps } from "react-markdown";
 import { integer, number, safeParse, toMinValue } from "valibot";
 import { cookies } from "next/headers";
 import Manage from "./edit/manageArticle";
 import type { Metadata } from "next";
 import remarkGfm from "remark-gfm";
+import { codeToTokens } from "shiki";
+import { use } from "react";
+import type { ClassAttributes, HTMLAttributes } from "react";
 
 type Props = {
 	searchParams: { [key: string]: string | string[] | undefined };
@@ -143,6 +147,7 @@ export default async function Page({ searchParams }: Props) {
 								alt={props.alt ?? "Image without alt text"}
 							/>
 						),
+						code: HighlighCode,
 					}}
 				>
 					{issue.body}
@@ -160,4 +165,33 @@ function parsePostNumber(
 	const parsedIndex = safeParse(PageIndexSchema, Number(page));
 	if (parsedIndex.success) return parsedIndex.output;
 	return undefined;
+}
+
+/**
+ * Highlights code with the shiki package
+ * React markdown doesn't play nice with skiji's rehype plugin.
+ * This is a jank solution to make them work together.
+ */
+function HighlighCode(
+	props: ClassAttributes<HTMLElement> &
+		HTMLAttributes<HTMLElement> &
+		ExtraProps,
+) {
+	const match = /language-(\w+)/.exec(props.className || "");
+	if (match == null) return <code {...props} />;
+	const raw = props.children?.toString() || "";
+	const hast = use(
+		codeToTokens(raw, {
+			lang: "js",
+			theme: "github-dark",
+		}),
+	);
+	const content = hast.tokens.map((line) => {
+		const content = line.map((token) => (
+			<span style={{ color: token.color }}>{token.content}</span>
+		));
+		content.push(<br />);
+		return content;
+	});
+	return <code className="text-wrap">{content}</code>;
 }
