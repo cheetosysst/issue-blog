@@ -137,11 +137,10 @@ export default async function Page({ searchParams }: Props) {
 							</Link>
 						),
 						img: (props) => (
-							<Image
+							<img
 								src={props.src ?? ""}
-								className="mb-2 overflow-hidden rounded-2xl"
+								className="mb-2 h-auto w-full overflow-hidden rounded-2xl"
 								alt={props.alt ?? "Image without alt text"}
-								fill={true}
 							/>
 						),
 					}}
