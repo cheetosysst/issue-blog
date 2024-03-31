@@ -83,4 +83,5 @@ export async function clearAuthToken() {
 	"use server";
 	const cookieStore = cookies();
 	cookieStore.delete("gh_token");
+	cookieStore.delete("gh_user");
 }
